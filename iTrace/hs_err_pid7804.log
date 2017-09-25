@@ -1,0 +1,305 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x001f370d, pid=7804, tid=0x0000248c
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_131-b11) (build 1.8.0_131-b11)
+# Java VM: Java HotSpot(TM) Client VM (25.131-b11 mixed mode, sharing windows-x86 )
+# Problematic frame:
+# C  [TobiiTracker.dll+0x1370d]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0021d800):  JavaThread "main" [_thread_in_native, id=9356, stack(0x00480000,0x004d0000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x00000000
+
+Registers:
+EAX=0x00000000, EBX=0x01131d90, ECX=0x00000000, EDX=0x0052cad0
+ESP=0x004cf9c8, EBP=0x004cfae8, ESI=0x004cf9c8, EDI=0x004cfae8
+EIP=0x001f370d, EFLAGS=0x00210206
+
+Top of Stack: (sp=0x004cf9c8)
+0x004cf9c8:   0021d800 01131d90 01131d90 cccccccc
+0x004cf9d8:   cccccccc cccccccc cccccccc cccccccc
+0x004cf9e8:   cccccccc cccccccc cccccccc cccccccc
+0x004cf9f8:   cccccccc cccccccc cccccccc cccccccc
+0x004cfa08:   cccccccc cccccccc cccccccc cccccccc
+0x004cfa18:   cccccccc cccccccc cccccccc cccccccc
+0x004cfa28:   cccccccc cccccccc cccccccc cccccccc
+0x004cfa38:   cccccccc cccccccc cccccccc cccccccc 
+
+Instructions: (pc=0x001f370d)
+0x001f36ed:   e1 1f 00 83 c4 04 3b f4 e8 be da ff ff 89 45 cc
+0x001f36fd:   b8 04 00 00 00 6b c8 00 8b 55 d8 8b 02 8b 55 f4
+0x001f370d:   8b 04 01 89 42 0c 68 84 aa 1f 00 e8 25 dd ff ff
+0x001f371d:   83 c4 04 8b f4 6a 01 ff 15 bc e1 1f 00 83 c4 04 
+
+
+Register to memory mapping:
+
+EAX=0x00000000 is an unknown value
+EBX={method} {0x01131d94} 'jniConnectTobiiTracker' '(I)Z' in 'edu/ysu/itrace/trackers/TobiiTracker'
+ECX=0x00000000 is an unknown value
+EDX=0x0052cad0 is an unknown value
+ESP=0x004cf9c8 is pointing into the stack for thread: 0x0021d800
+EBP=0x004cfae8 is pointing into the stack for thread: 0x0021d800
+ESI=0x004cf9c8 is pointing into the stack for thread: 0x0021d800
+EDI=0x004cfae8 is pointing into the stack for thread: 0x0021d800
+
+
+Stack: [0x00480000,0x004d0000],  sp=0x004cf9c8,  free space=318k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [TobiiTracker.dll+0x1370d]
+j  edu.ysu.itrace.trackers.TobiiTracker.jniConnectTobiiTracker(I)Z+0
+j  edu.ysu.itrace.trackers.TobiiTracker.<init>()V+108
+j  edu.ysu.itrace.trackers.TobiiTracker.main([Ljava/lang/String;)V+14
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0x15af45]
+V  [jvm.dll+0x2213ae]
+V  [jvm.dll+0x15afde]
+V  [jvm.dll+0xdcb97]
+V  [jvm.dll+0xe512f]
+C  [javaw.exe+0x22ab]
+C  [javaw.exe+0xaebf]
+C  [javaw.exe+0xaf49]
+C  [kernel32.dll+0x1336a]
+C  [ntdll.dll+0x39902]
+C  [ntdll.dll+0x398d5]
+C  0x00000000
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  edu.ysu.itrace.trackers.TobiiTracker.jniConnectTobiiTracker(I)Z+0
+j  edu.ysu.itrace.trackers.TobiiTracker.<init>()V+108
+j  edu.ysu.itrace.trackers.TobiiTracker.main([Ljava/lang/String;)V+14
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x1623e000 JavaThread "AWT-Windows" daemon [_thread_in_native, id=9056, stack(0x169e0000,0x16a30000)]
+  0x16237000 JavaThread "Java2D Disposer" daemon [_thread_blocked, id=9684, stack(0x15170000,0x151c0000)]
+  0x00bfb800 JavaThread "Service Thread" daemon [_thread_blocked, id=9600, stack(0x15360000,0x153b0000)]
+  0x00be6000 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=10476, stack(0x15270000,0x152c0000)]
+  0x00be3c00 JavaThread "Attach Listener" daemon [_thread_blocked, id=10704, stack(0x14f80000,0x14fd0000)]
+  0x00be0800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=11824, stack(0x152c0000,0x15310000)]
+  0x00bd2400 JavaThread "Finalizer" daemon [_thread_blocked, id=1816, stack(0x15070000,0x150c0000)]
+  0x00b76000 JavaThread "Reference Handler" daemon [_thread_blocked, id=11508, stack(0x14e50000,0x14ea0000)]
+=>0x0021d800 JavaThread "main" [_thread_in_native, id=9356, stack(0x00480000,0x004d0000)]
+
+Other Threads:
+  0x00b71c00 VMThread [stack: 0x01360000,0x013b0000] [id=7888]
+  0x00c1a800 WatcherThread [stack: 0x15ad0000,0x15b20000] [id=9884]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ def new generation   total 4928K, used 3473K [0x04800000, 0x04d50000, 0x09d50000)
+  eden space 4416K,  67% used [0x04800000, 0x04ae4740, 0x04c50000)
+  from space 512K, 100% used [0x04c50000, 0x04cd0000, 0x04cd0000)
+  to   space 512K,   0% used [0x04cd0000, 0x04cd0000, 0x04d50000)
+ tenured generation   total 10944K, used 1462K [0x09d50000, 0x0a800000, 0x14800000)
+   the space 10944K,  13% used [0x09d50000, 0x09ebdab0, 0x09ebdc00, 0x0a800000)
+ Metaspace       used 756K, capacity 2497K, committed 2624K, reserved 4480K
+
+Card table byte_map: [0x003f0000,0x00480000] byte_map_base: 0x003cc000
+
+Polling page: 0x00120000
+
+CodeCache: size=32768Kb used=943Kb max_used=943Kb free=31824Kb
+ bounds [0x027f0000, 0x028e0000, 0x047f0000]
+ total_blobs=405 nmethods=223 adapters=113
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 0.519 Thread 0x00be6000  219             java.util.Hashtable$Entry::<init> (26 bytes)
+Event: 0.519 Thread 0x00be6000 nmethod 219 0x028da0c8 code [0x028da1c0, 0x028da270]
+Event: 0.519 Thread 0x00be6000  220             java.util.HashMap$HashIterator::hasNext (13 bytes)
+Event: 0.519 Thread 0x00be6000 nmethod 220 0x028da2c8 code [0x028da3c0, 0x028da450]
+Event: 0.519 Thread 0x00be6000  221  s          java.util.Hashtable::get (69 bytes)
+Event: 0.519 Thread 0x00be6000 nmethod 221 0x028da488 code [0x028da5b0, 0x028da878]
+Event: 0.521 Thread 0x00be6000  222             java.util.HashMap$Node::getKey (5 bytes)
+Event: 0.521 Thread 0x00be6000 nmethod 222 0x028daa08 code [0x028dab00, 0x028dab80]
+Event: 0.523 Thread 0x00be6000  223 %           edu.ysu.itrace.trackers.TobiiTracker::<init> @ 90 (143 bytes)
+Event: 0.524 Thread 0x00be6000 nmethod 223% 0x028dabc8 code [0x028dadd0, 0x028db8a0]
+
+GC Heap History (4 events):
+Event: 0.138 GC heap before
+{Heap before GC invocations=0 (full 0):
+ def new generation   total 4928K, used 4204K [0x04800000, 0x04d50000, 0x09d50000)
+  eden space 4416K,  95% used [0x04800000, 0x04c1b0a0, 0x04c50000)
+  from space 512K,   0% used [0x04c50000, 0x04c50000, 0x04cd0000)
+  to   space 512K,   0% used [0x04cd0000, 0x04cd0000, 0x04d50000)
+ tenured generation   total 10944K, used 0K [0x09d50000, 0x0a800000, 0x14800000)
+   the space 10944K,   0% used [0x09d50000, 0x09d50000, 0x09d50200, 0x0a800000)
+ Metaspace       used 41K, capacity 2240K, committed 2240K, reserved 4480K
+Event: 0.140 GC heap after
+Heap after GC invocations=1 (full 0):
+ def new generation   total 4928K, used 511K [0x04800000, 0x04d50000, 0x09d50000)
+  eden space 4416K,   0% used [0x04800000, 0x04800000, 0x04c50000)
+  from space 512K,  99% used [0x04cd0000, 0x04d4ffb8, 0x04d50000)
+  to   space 512K,   0% used [0x04c50000, 0x04c50000, 0x04cd0000)
+ tenured generation   total 10944K, used 319K [0x09d50000, 0x0a800000, 0x14800000)
+   the space 10944K,   2% used [0x09d50000, 0x09d9fe00, 0x09d9fe00, 0x0a800000)
+ Metaspace       used 41K, capacity 2240K, committed 2240K, reserved 4480K
+}
+Event: 0.438 GC heap before
+{Heap before GC invocations=1 (full 0):
+ def new generation   total 4928K, used 4927K [0x04800000, 0x04d50000, 0x09d50000)
+  eden space 4416K, 100% used [0x04800000, 0x04c50000, 0x04c50000)
+  from space 512K,  99% used [0x04cd0000, 0x04d4ffb8, 0x04d50000)
+  to   space 512K,   0% used [0x04c50000, 0x04c50000, 0x04cd0000)
+ tenured generation   total 10944K, used 319K [0x09d50000, 0x0a800000, 0x14800000)
+   the space 10944K,   2% used [0x09d50000, 0x09d9fe00, 0x09d9fe00, 0x0a800000)
+ Metaspace       used 341K, capacity 2497K, committed 2624K, reserved 4480K
+Event: 0.443 GC heap after
+Heap after GC invocations=2 (full 0):
+ def new generation   total 4928K, used 512K [0x04800000, 0x04d50000, 0x09d50000)
+  eden space 4416K,   0% used [0x04800000, 0x04800000, 0x04c50000)
+  from space 512K, 100% used [0x04c50000, 0x04cd0000, 0x04cd0000)
+  to   space 512K,   0% used [0x04cd0000, 0x04cd0000, 0x04d50000)
+ tenured generation   total 10944K, used 1462K [0x09d50000, 0x0a800000, 0x14800000)
+   the space 10944K,  13% used [0x09d50000, 0x09ebdab0, 0x09ebdc00, 0x0a800000)
+ Metaspace       used 341K, capacity 2497K, committed 2624K, reserved 4480K
+}
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 0.034 Thread 0x0021d800 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x04807c90) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\jni.cpp,
+Event: 0.083 Thread 0x0021d800 Exception <a 'java/io/FileNotFoundException'> (0x0486e8f0) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 0.201 Thread 0x0021d800 Exception <a 'java/security/PrivilegedActionException'> (0x048c7bc8) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\jvm.cpp, line 1390]
+Event: 0.201 Thread 0x0021d800 Exception <a 'java/security/PrivilegedActionException'> (0x048c7dc8) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\jvm.cpp, line 1390]
+Event: 0.202 Thread 0x0021d800 Exception <a 'java/security/PrivilegedActionException'> (0x048cbc00) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\jvm.cpp, line 1390]
+Event: 0.202 Thread 0x0021d800 Exception <a 'java/security/PrivilegedActionException'> (0x048e1f68) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\jvm.cpp, line 1390]
+Event: 0.209 Thread 0x0021d800 Exception <a 'java/io/FileNotFoundException'> (0x048f0930) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\jni.cpp, line 709]
+Event: 0.274 Thread 0x0021d800 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x049ab330) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\methodHandles.cpp, line 1146]
+Event: 0.277 Thread 0x0021d800 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x049b74d0) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\methodHandles.cpp, line 1146]
+Event: 0.318 Thread 0x0021d800 Exception <a 'java/io/FileNotFoundException'> (0x04a3c958) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u131\8869\hotspot\src\share\vm\prims\jni.cpp, line 709]
+
+Events (10 events):
+Event: 0.519 loading class java/util/jar/JarVerifier$VerifierStream done
+Event: 0.519 loading class sun/security/util/ManifestEntryVerifier$SunProviderHolder
+Event: 0.519 loading class sun/security/util/ManifestEntryVerifier$SunProviderHolder done
+Event: 0.522 loading class java/awt/geom/Point2D$Double
+Event: 0.522 loading class java/awt/geom/Point2D$Double done
+Event: 0.522 loading class edu/ysu/itrace/trackers/TobiiTracker$BackgroundThread
+Event: 0.522 loading class edu/ysu/itrace/trackers/TobiiTracker$BackgroundThread done
+Event: 0.523 Thread 0x162f5c00 Thread added: 0x162f5c00
+Event: 0.523 Thread 0x162f5c00 Thread exited: 0x162f5c00
+Event: 1.330 Thread 0x16239800 Thread exited: 0x16239800
+
+
+Dynamic libraries:
+0x013b0000 - 0x013e3000 	C:\Program Files (x86)\Java\jre1.8.0_131\bin\javaw.exe
+0x772f0000 - 0x77470000 	C:\Windows\SysWOW64\ntdll.dll
+0x755f0000 - 0x75700000 	C:\Windows\syswow64\kernel32.dll
+0x754f0000 - 0x75537000 	C:\Windows\syswow64\KERNELBASE.dll
+0x75540000 - 0x755e1000 	C:\Windows\syswow64\ADVAPI32.dll
+0x76b10000 - 0x76bbc000 	C:\Windows\syswow64\msvcrt.dll
+0x75010000 - 0x75029000 	C:\Windows\SysWOW64\sechost.dll
+0x75310000 - 0x75400000 	C:\Windows\syswow64\RPCRT4.dll
+0x74b90000 - 0x74bf0000 	C:\Windows\syswow64\SspiCli.dll
+0x74b80000 - 0x74b8c000 	C:\Windows\syswow64\CRYPTBASE.dll
+0x74c50000 - 0x74d50000 	C:\Windows\syswow64\USER32.dll
+0x75400000 - 0x75490000 	C:\Windows\syswow64\GDI32.dll
+0x767c0000 - 0x767ca000 	C:\Windows\syswow64\LPK.dll
+0x76bc0000 - 0x76c5d000 	C:\Windows\syswow64\USP10.dll
+0x74230000 - 0x743ce000 	C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.18837_none_41e855142bd5705d\COMCTL32.dll
+0x769b0000 - 0x76a07000 	C:\Windows\syswow64\SHLWAPI.dll
+0x76660000 - 0x766c0000 	C:\Windows\system32\IMM32.DLL
+0x76a20000 - 0x76aed000 	C:\Windows\syswow64\MSCTF.dll
+0x78880000 - 0x7893f000 	C:\Program Files (x86)\Java\jre1.8.0_131\bin\msvcr100.dll
+0x5ea10000 - 0x5edde000 	C:\Program Files (x86)\Java\jre1.8.0_131\bin\client\jvm.dll
+0x70bf0000 - 0x70bf7000 	C:\Windows\system32\WSOCK32.dll
+0x766c0000 - 0x766f5000 	C:\Windows\syswow64\WS2_32.dll
+0x76850000 - 0x76856000 	C:\Windows\syswow64\NSI.dll
+0x74550000 - 0x74582000 	C:\Windows\system32\WINMM.dll
+0x73e50000 - 0x73e59000 	C:\Windows\system32\VERSION.dll
+0x75710000 - 0x75715000 	C:\Windows\syswow64\PSAPI.DLL
+0x65690000 - 0x6569c000 	C:\Program Files (x86)\Java\jre1.8.0_131\bin\verify.dll
+0x652f0000 - 0x65311000 	C:\Program Files (x86)\Java\jre1.8.0_131\bin\java.dll
+0x652d0000 - 0x652e3000 	C:\Program Files (x86)\Java\jre1.8.0_131\bin\zip.dll
+0x75750000 - 0x7639c000 	C:\Windows\syswow64\SHELL32.dll
+0x74eb0000 - 0x7500d000 	C:\Windows\syswow64\ole32.dll
+0x75490000 - 0x7549b000 	C:\Windows\syswow64\profapi.dll
+0x001e0000 - 0x00202000 	C:\Users\Dennis\workspace\iTrace\TobiiTracker.dll
+0x6b790000 - 0x6b7a8000 	C:\Dev-Cpp\lib\tobii_research.dll
+0x15d20000 - 0x15de2000 	C:\Dev-Cpp\lib\tobii_pro.dll
+0x15df0000 - 0x15ef5000 	C:\Dev-Cpp\lib\tobii_stream_engine.dll
+0x75030000 - 0x75151000 	C:\Windows\syswow64\CRYPT32.dll
+0x74ea0000 - 0x74eac000 	C:\Windows\syswow64\MSASN1.dll
+0x74720000 - 0x7473c000 	C:\Windows\system32\IPHLPAPI.DLL
+0x74710000 - 0x74717000 	C:\Windows\system32\WINNSI.DLL
+0x746f0000 - 0x74701000 	C:\Windows\system32\NETAPI32.dll
+0x746e0000 - 0x746e9000 	C:\Windows\system32\netutils.dll
+0x746c0000 - 0x746d9000 	C:\Windows\system32\srvcli.dll
+0x746b0000 - 0x746bf000 	C:\Windows\system32\wkscli.dll
+0x74d70000 - 0x74e01000 	C:\Windows\syswow64\OLEAUT32.dll
+0x00310000 - 0x0032a000 	C:\Windows\system32\VCRUNTIME140D.dll
+0x16610000 - 0x16781000 	C:\Windows\system32\ucrtbased.dll
+0x00330000 - 0x00333000 	C:\Windows\system32\api-ms-win-core-timezone-l1-1-0.dll
+0x00340000 - 0x00343000 	C:\Windows\system32\api-ms-win-core-file-l2-1-0.dll
+0x00360000 - 0x00363000 	C:\Windows\system32\api-ms-win-core-localization-l1-2-0.dll
+0x6be90000 - 0x6be93000 	C:\Windows\system32\api-ms-win-core-synch-l1-2-0.dll
+0x004d0000 - 0x004d3000 	C:\Windows\system32\api-ms-win-core-processthreads-l1-1-1.dll
+0x00a60000 - 0x00a63000 	C:\Windows\system32\api-ms-win-core-file-l1-2-0.dll
+0x72280000 - 0x72297000 	C:\Windows\system32\CRYPTSP.dll
+0x72240000 - 0x7227b000 	C:\Windows\system32\rsaenh.dll
+0x74640000 - 0x7467c000 	C:\Windows\system32\mswsock.dll
+0x74630000 - 0x74635000 	C:\Windows\System32\wshtcpip.dll
+0x74620000 - 0x74626000 	C:\Windows\System32\wship6.dll
+0x74600000 - 0x74612000 	C:\Windows\system32\dhcpcsvc.DLL
+0x745f0000 - 0x745fd000 	C:\Windows\system32\dhcpcsvc6.DLL
+0x6c820000 - 0x6c965000 	C:\Program Files (x86)\Java\jre1.8.0_131\bin\awt.dll
+0x745a0000 - 0x745e4000 	C:\Windows\system32\DNSAPI.dll
+0x73f30000 - 0x73f43000 	C:\Windows\system32\DWMAPI.DLL
+0x190c0000 - 0x19188000 	C:\Windows\system32\opengl32.dll
+0x14dc0000 - 0x14de2000 	C:\Windows\system32\GLU32.dll
+0x66b60000 - 0x66c47000 	C:\Windows\system32\DDRAW.dll
+0x67090000 - 0x67096000 	C:\Windows\system32\DCIMAN32.dll
+0x75170000 - 0x7530d000 	C:\Windows\syswow64\SETUPAPI.dll
+0x76c60000 - 0x76c87000 	C:\Windows\syswow64\CFGMGR32.dll
+0x76af0000 - 0x76b02000 	C:\Windows\syswow64\DEVOBJ.dll
+0x73f50000 - 0x73fd0000 	C:\Windows\system32\uxtheme.dll
+0x668a0000 - 0x6698b000 	C:\Windows\system32\dbghelp.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1252 
+java_command: edu.ysu.itrace.trackers.TobiiTracker
+java_class_path (initial): C:\Users\Dennis\workspace\iTrace\lib\TETJavaClient.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.ui_3.108.1.v20160929-1045.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.swt_3.105.3.v20170228-0512.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.swt.win32.win32.x86_3.105.3.v20170228-0512.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.jface_3.12.2.v20170113-2113.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.core.commands_3.8.1.v20161221-1651.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.ui.workbench_3.108.3.v20170216-1539.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.e4.ui.workbench3_0.13.100.v20160506-0759.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.core.runtime_3.12.0.v20160606-1342.jar;C:\Users\Dennis\.p2\pool\plugins\javax.inject_1.0.0.v20091030.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.osgi_3.11.3.v20170209-1843.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.osgi.compatibility.state_1.0.200.v20160504-1419.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.wst.jsdt.nashorn.extension_1.0.2.v201610280128.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.equinox.common_3.8.0.v20160509-1230.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.core.jobs_3.8.0.v20160509-0411.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.equinox.registry_3.6.100.v20160223-2218.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.equinox.preferences_3.6.1.v20160815-1406.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.core.contenttype_3.5.100.v20160418-1621.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.equinox.app_1.3.400.v20150715-1528.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.ui.ide_3.12.3.v20170119-0935.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.core.resources_3.11.1.v20161107-2032.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.jface.text_3.11.2.v20170220-1911.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.text_3.6.0.v20160503-1849.jar;C:\Users\Dennis\.p2\pool\plugins\org.eclipse.ui.navigator_3.6.101.v20161006-1120
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.7.0
+PATH=C:/Program Files (x86)/Java/jre1.8.0_131/bin/client;C:/Program Files (x86)/Java/jre1.8.0_131/bin;C:/Program Files (x86)/Java/jre1.8.0_131/lib/i386;C:\Users\Dennis\Anaconda2;C:\Users\Dennis\Anaconda2\Scripts;C:\Users\Dennis\Anaconda2\Library\bin;C:\Program Files (x86)\Haskell\bin;C:\ghc\ghc-6.10.4\bin;C:\Users\Dennis\Dropbox\DTU\datasikkerhed\ass1\ofmc-2016\ofmc-win-64bit.exe;C:\Program Files\CMake\bin;C:\Dev-Cpp\bin;C:\Dev-Cpp\lib;C:\Program Files (x86)\Java\jdk1.8.0_144\bin;C:\Program Files (x86)\Java\jdk1.8.0_144\jre\bin;C:\Users\Dennis\Anaconda2;C:\Users\Dennis\Anaconda2\Scripts;C:\Users\Dennis\Anaconda2\Library\bin;C:\Program Files (x86)\Haskell\bin;C:\ghc\ghc-6.10.4\bin;C:\Users\Dennis\Dropbox\DTU\datasikkerhed\ass1\ofmc-2016\ofmc-win-64bit.exe;C:\Users\Dennis\Desktop;
+USERNAME=Dennis
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 (6.1.7601.23889)
+
+CPU:total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, clmul, ht, tsc, tscinvbit
+
+Memory: 4k page, physical 4042608k(1104588k free), swap 8083356k(3136504k free)
+
+vm_info: Java HotSpot(TM) Client VM (25.131-b11) for windows-x86 JRE (1.8.0_131-b11), built on Mar 15 2017 01:26:29 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Thu Sep 21 15:34:30 2017
+elapsed time: 2 seconds (0d 0h 0m 2s)
+
