@@ -1,0 +1,1 @@
+-ltobii_research -Wl,-Bstatic -lboost_filesystem-mgw63-mt-1_64 -lboost_regex-mgw63-mt-1_64 -lboost_thread-mgw63-mt-1_64 -lboost_system-mgw63-mt-1_64 -Wl,-Bdynamic -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 -ltobii_research 

@@ -1,0 +1,3 @@
+C:/Users/Dennis/workspace/iTrace/jni/TobiiTracker/build/CMakeFiles/TobiiTracker.dir
+C:/Users/Dennis/workspace/iTrace/jni/TobiiTracker/build/CMakeFiles/edit_cache.dir
+C:/Users/Dennis/workspace/iTrace/jni/TobiiTracker/build/CMakeFiles/rebuild_cache.dir
