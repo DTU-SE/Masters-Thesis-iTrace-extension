@@ -65,9 +65,9 @@ public class TobiiTracker implements IEyeTracker {
         }
 
 	     protected void displayCalibrationStatus(JFrame frame) throws Exception {
-	    	 double[] pointsNormalized = jniGetCalibration(); 
+	    	 double[] pointsNormalized = jniGetCalibration();
 	    	 
-	     if (pointsNormalized == null)
+	    	 if (pointsNormalized == null)
 	    		 throw new IOException("Can't get calibration data!");
 	    	 
 	    	 int zeros = 0;
@@ -124,7 +124,7 @@ public class TobiiTracker implements IEyeTracker {
        		calibDisplay.windowDimension = new Dimension(width,height);
 	        calibFrame.setVisible(true);
 	        calibDisplay.repaint();
-	    } 
+	    }
 
         private native void jniAddPoint(double x, double y)
                 throws RuntimeException, IOException;
@@ -152,7 +152,6 @@ public class TobiiTracker implements IEyeTracker {
 
     public TobiiTracker() throws EyeTrackerConnectException,
                                  IOException {
-        //DENNIS FJERN KOMMENTAR FOR CALIBRATOR NÅR DU GIDER IMPLEMENTERE DET
         calibrator = new Calibrator(this);
         //Initialise the background thread which functions as the main loop in
         //the Tobii SDK.
@@ -160,13 +159,10 @@ public class TobiiTracker implements IEyeTracker {
         bg_thread.start();
         while (native_data == null); //Wait until background thread sets native_data
         if (!jniConnectTobiiTracker(10)) {
-        System.out.println("Connect tobiiTracker not done\n");
             this.close();
             throw new EyeTrackerConnectException();
         }
-        System.out.println("Connect tobiiTracker done");
-
-        //eventBroker = PlatformUI.getWorkbench().getService(IEventBroker.class);
+        eventBroker = PlatformUI.getWorkbench().getService(IEventBroker.class);
     }
 
     public static void main(String[] args) {
@@ -179,29 +175,23 @@ public class TobiiTracker implements IEyeTracker {
                                       .getScreenSize();
             System.out.println("Screen size: (" + window_bounds.width + ", "
                     + window_bounds.height + ")");
-            System.out.println("window bounds \n");
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("about to calibrate");
-            tobii_tracker.calibrate();
-            System.out.println("about to start tracking");
-            //tobii_tracker.startTracking();
-            System.out.println("about to display crosshair");
+
+            //tobii_tracker.calibrate();
+
+            tobii_tracker.startTracking();
             tobii_tracker.displayCrosshair(true);
-            System.out.println("setting start date");
             long start = (new Date()).getTime();
-            System.out.println("start date set. bout to loop");
             while ((new Date()).getTime() < start + 5000);
-              System.out.println("y tho");
-            System.out.println("abotu to stop tracking");
-            //tobii_tracker.stopTracking();
+            tobii_tracker.stopTracking();
             tobii_tracker.displayCrosshair(false);
             tobii_tracker.clear();
-            System.out.println("about to startTracking");
-            //tobii_tracker.startTracking();
+
+            tobii_tracker.startTracking();
             start = (new Date()).getTime();
             while ((new Date()).getTime() < start + 25000) {
                 Gaze gaze = tobii_tracker.getGaze();
@@ -212,16 +202,15 @@ public class TobiiTracker implements IEyeTracker {
                             + ") with validity (Left: " + gaze.getLeftValidity()
                             + ", Right: " + gaze.getRightValidity() + ")");
                 }
-                //System.out.println("start: " +start+2500+" New date " +new Date().getTime());
             }
-            //tobii_tracker.stopTracking();
+            tobii_tracker.stopTracking();
 
             tobii_tracker.close();
         } catch (EyeTrackerConnectException e) {
             System.out.println("Failed to connect to Tobii eyetracker.");
-        } catch (CalibrationException e) {
-            tobii_tracker.close();
-            System.out.println("Could not calibrate. Try again.");
+        //} catch (CalibrationException e) {
+          //  tobii_tracker.close();
+            //System.out.println("Could not calibrate. Try again.");
         } catch (IOException e) {
             tobii_tracker.close();
             System.out.println("IO failure occurred.");
@@ -253,7 +242,6 @@ public class TobiiTracker implements IEyeTracker {
             double right_x, double right_y, int left_validity,
             int right_validity, double left_pupil_diameter,
             double right_pupil_diameter) {
-      System.out.println("left validity" + right_x);
     	if(left_validity == 4 && right_validity == 4) return; //Ignore new gaze
     	if(previousTrackerTime != null && (timestamp/1000) == (previousTrackerTime/1000)){
         	//Ignore new gaze;
