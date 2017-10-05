@@ -28,7 +28,8 @@ struct TobiiNativeData
 	jobject j_tobii_tracker;
 	jobject j_background_thread;
 	TobiiResearchEyeTracker* eye_tracker;
-
+	TobiiResearchCalibrationData* calibration_data = NULL;
+	TobiiResearchCalibrationResult* calibration_result = NULL;
 	//MainLoop main_loop;
    
 
@@ -64,25 +65,15 @@ jfieldID getFieldID(JNIEnv* env, jobject obj, const char* name, const char* sig)
 
 TobiiNativeData* getTobiiNativeData(JNIEnv* env, jobject obj)
 {
-	printf("\nentered getTobiiNativeData");
-	fflush(stdout);
 	jfieldID jfid_native_data = getFieldID(env, obj, "native_data",
 		"Ljava/nio/ByteBuffer;");
-	printf("\nSat jfidNativeData");
-		fflush(stdout);
 
 	if (jfid_native_data == NULL) 
 	{
-		printf("\njfidNativeData == null");
-			fflush(stdout);
 		return NULL;
 	}
-	printf("\njfidSet");
-		fflush(stdout);
 
 	jobject native_data_bb = env->GetObjectField(obj, jfid_native_data);
-	printf("\nnativeData_bb set");
-		fflush(stdout);
 
 	return (TobiiNativeData*) env->GetDirectBufferAddress(native_data_bb);
 }
@@ -112,12 +103,8 @@ JNIEXPORT jboolean JNICALL
 	if (jfid_native_data == NULL)
 		return JNI_FALSE;
 	//Create structure to hold instance-specific data.
-	printf("Hello BeginTobiiMainloop1");
-	fflush(stdout);
 
 	TobiiNativeData* native_data = new TobiiNativeData();
-	printf("Hello BeginTobiiMainloop2");
-	fflush(stdout);
 
 
 	jobject native_data_bb = env->NewDirectByteBuffer((void*) native_data,
@@ -127,8 +114,6 @@ JNIEXPORT jboolean JNICALL
 	native_data->j_background_thread = env->NewGlobalRef(obj);
 	//Store structure reference in Java object.
 	env->SetObjectField(parent_tobii_tracker, jfid_native_data, native_data_bb);
-	printf("Hello BeginTobiiMainloop");
-	fflush(stdout);
 
 
 	//Run!
@@ -181,26 +166,16 @@ Java_edu_ysu_itrace_trackers_TobiiTracker_jniConnectTobiiTracker(
 	JNIEnv* env, jobject obj, jint timeout_seconds)
 {
 	//Get native data from object.
-	printf("\nEntered jniConnect");
-	fflush(stdout);
 
 	TobiiNativeData* native_data = getTobiiNativeData(env, obj);
-	printf("\ntobiiNativeData got");
-	fflush(stdout);
 
 	if (native_data == NULL)
 	{
-		printf("native_data == NULL");
-		fflush(stdout);
 		return JNI_FALSE;
 	}
 	//Set TobiiTracker reference.
-	printf("\nbefore j_tobii");
-	fflush(stdout);
 
 	native_data->j_tobii_tracker = env->NewGlobalRef(obj);
-	printf("\nafter j_tobii");
-	fflush(stdout);
 	//Find Tobii trackers.
 	/**EyeTrackerBrowser::pointer_t browser =
 		EyeTrackerBrowserFactory::createBrowser(native_data->main_loop);**/
@@ -208,6 +183,7 @@ Java_edu_ysu_itrace_trackers_TobiiTracker_jniConnectTobiiTracker(
 	browser->addEventListener(handleBrowserEvent);**/
 	time_t start_time = time(NULL);
 	//Wait until found or timeout occurs.
+	//Currently does not have this 
 	while (0)//g_et_info == NULL)
 	{
 		if (time(NULL) > start_time + timeout_seconds)
@@ -222,17 +198,13 @@ Java_edu_ysu_itrace_trackers_TobiiTracker_jniConnectTobiiTracker(
 	//Connect eye tracker
 	/**cker = et_info->getEyeTrackerFactory()->
 		createEyeTracker(native_data->main_loop); **/
-	printf("\nBeforeSettingEyetrackers");
-	fflush(stdout);
 	TobiiResearchEyeTrackers* eyetrackers = NULL;
     TobiiResearchStatus result = tobii_research_find_all_eyetrackers(&eyetrackers);
 	native_data->eye_tracker = eyetrackers->eyetrackers[0];
-	printf("\nEyetrackerSet");
-	fflush(stdout);
 	//Setting license
 	int license_success;
-	license_success = apply_licenses_example(native_data->eye_tracker, "C:/Users/Dennis/Desktop/license_key_00395217_-_DTU_Compute_IS404-100106444184");
-	fflush(stdout);
+	//HARD CODED. BAD
+	license_success = apply_licenses_example(native_data->eye_tracker, "C:/Users/Dennis/Desktop/Tobii_license");
 	
 	//Needs a check for whether eyetracker is found.
 	
@@ -264,20 +236,10 @@ JNIEXPORT void JNICALL Java_edu_ysu_itrace_trackers_TobiiTracker_close
 
 void handleGazeData(TobiiResearchGazeData* gaze_data)
 {
-	printf("\nhandleGazeData entered");
-	fflush(stdout);
 	JNIEnv* env = NULL;
 	g_native_data_current->jvm->AttachCurrentThread((void**) &env, NULL);
 	jint rs = g_native_data_current->jvm->GetEnv((void**) &env, JNI_VERSION_1_6);
 	if (rs != JNI_OK || env == NULL) {
-		if (env == NULL) {
-			printf("\nEnv is null feelsbadman");
-			fflush(stdout);
-		}
-		if (!JNI_OK) {
-			printf("JNI NOT OK");
-			fflush(stdout);
-		}
 		return;
 	}
 	jobject obj = g_native_data_current->j_tobii_tracker;
@@ -355,12 +317,8 @@ JNIEXPORT void JNICALL Java_edu_ysu_itrace_trackers_TobiiTracker_stopTracking
 
 	try
 	{
-		printf("stop tracking");
-			fflush(stdout);
 		tobii_research_unsubscribe_from_gaze_data(g_native_data_current->eye_tracker, gaze_data_callback);
 		g_native_data_current = NULL;
-		printf("stopped trackin");
-		fflush(stdout);
 	}
 	catch (const std::invalid_argument& e)
 	{
@@ -388,8 +346,6 @@ JNIEXPORT void
 
 	try
 	{
-		printf("about to addPoint");
-		fflush(stdout);
 		TobiiResearchNormalizedPoint2D point[1] = {x,y};
 		//Add new calibration point
 		tobii_research_screen_based_calibration_collect_data(native_data->eye_tracker, point->x, point->y);
@@ -401,9 +357,6 @@ JNIEXPORT void
 			/* Not all eye tracker models will fail at this point, but instead fail on ComputeAndApply. */
 			//tobii_research_screen_based_calibration_collect_data(native_data->eye_tracker, point->x, point->y);
 		//}
-		printf("addPoint went good");
-		fflush(stdout);
-		return;
 		
 		
 		//native_data->eye_tracker->addCalibrationPoint(Point2d(
@@ -435,11 +388,7 @@ JNIEXPORT void JNICALL
 	try
 	{
 		//Start and clear 
-		printf("\nbefore enter calibration mode");
-		fflush(stdout);
 		tobii_research_screen_based_calibration_enter_calibration_mode(native_data->eye_tracker);
-		printf("\nentered calibration mode");
-		fflush(stdout);
 		//native_data->eye_tracker->startCalibration();
 		//native_data->eye_tracker->clearCalibration();
 	}
@@ -469,21 +418,12 @@ JNIEXPORT void JNICALL
 
 	try
 	{
-		printf("\nEntered stop calibration JNI");
-		fflush(stdout);
 		//Compute and stop calibration
-		TobiiResearchCalibrationData* calibration_data = NULL;
-		TobiiResearchCalibrationResult* calibration_result = NULL;
 
-		TobiiResearchStatus status = tobii_research_screen_based_calibration_compute_and_apply(native_data->eye_tracker, &calibration_result);
-		if (status == TOBII_RESEARCH_STATUS_OK && calibration_result->status == TOBII_RESEARCH_CALIBRATION_SUCCESS) {
-			printf("Compute and apply returned %i and collected at %zu points.\n", status, calibration_result->calibration_point_count);
-		}
-		else {
-			printf("Calibration failed!\n");
-		}
 
+		TobiiResearchStatus status = tobii_research_screen_based_calibration_compute_and_apply(native_data->eye_tracker, &native_data->calibration_result);
 		tobii_research_screen_based_calibration_leave_calibration_mode(native_data->eye_tracker);
+		//old
 		//native_data->eye_tracker->computeCalibration();
 		//native_data->eye_tracker->stopCalibration();
 	}
@@ -498,8 +438,6 @@ JNIEXPORT jdoubleArray JNICALL
 	Java_edu_ysu_itrace_trackers_TobiiTracker_00024Calibrator_jniGetCalibration
   	(JNIEnv *env, jobject obj)
 {
-	printf("\nEntered JNIgetCalibration");
-	fflush(stdout);
 	//Get native data from parent TobiiTracker
 	jfieldID jfid_parent = getFieldID(env, obj, "parent",
 		"Ledu/ysu/itrace/trackers/TobiiTracker;");
@@ -512,71 +450,50 @@ JNIEXPORT jdoubleArray JNICALL
 	jobject parent_tobii_tracker = env->GetObjectField(obj, jfid_parent);
 	TobiiNativeData* native_data = getTobiiNativeData(env, parent_tobii_tracker);
 
-	/**try
+	try
 	{
-		printf("\nabout to jnigetCalibration");
-		fflush(stdout);
 		//Get calibration
 		//Calibration::pointer_t calibrationData =
 		//		native_data->eye_tracker->getCalibration();
-		TobiiResearchCalibrationData* calibration_data = NULL;
+		//		Calibration::plot_data_vector_t calibrationPlotData = calibrationData->getPlotData();
+				//TobiiResearchCalibrationResult* calibration_result = NULL;
+				//status = tobii_research_screen_based_calibration_compute_and_apply(native_data->eye_tracker, &calibration_result);
 
-//		Calibration::plot_data_vector_t calibrationPlotData = calibrationData->getPlotData();
-		TobiiResearchStatus status = tobii_research_retrieve_calibration_data(native_data->eye_tracker, &calibration_data);
-		TobiiResearchCalibrationResult* calibration_result = NULL;
-		//status = tobii_research_screen_based_calibration_compute_and_apply(native_data->eye_tracker, &calibration_result);
-		fflush(stdout);
+				//int itemCount = static_cast<int>(calibration_result->calibration_point_count);
 
-		printf("\nscreenbasedcalibration done");
-
-		printf("\nretrive_calibration_data done");
-		fflush(stdout);
-		//int itemCount = static_cast<int>(calibration_result->calibration_point_count);
-		int itemCount = static_cast<int>(calibration_data->size);
-		printf("\nitemcount set");
-		fflush(stdout);
-		fflush(stdout);
+		int itemCount = static_cast<int>(native_data->calibration_result->calibration_point_count);
 		jdoubleArray calibrationPoints = env->NewDoubleArray(4 * itemCount);  // allocate
-		
-   		if (NULL == calibrationPoints) return NULL;
 
-   		jdouble *points = env->GetDoubleArrayElements(calibrationPoints, 0);
-   		
+		if (NULL == calibrationPoints) return NULL;
+
+		jdouble *points = env->GetDoubleArrayElements(calibrationPoints, 0);
+
 		TobiiResearchCalibrationPoint item;
-		tobii_research_apply_calibration_data(native_data->eye_tracker, calibration_data);
-		printf("\nNumber of items %d",itemCount);
-		printf("\n number of calibration results %d", calibration_data->size);
-		fflush(stdout);
-		/**for (int i = 0; i < itemCount; i++)
-		{
-			printf("\nInside itemcount loop");
-			printf("\n%d", i);
-			fflush(stdout);
-			item = calibration_data->data;
-			printf("got calibration points");
-			fflush(stdout);
-			points[i] = item.calibration_samples->left_eye.position_on_display_area.x;
-			printf("got point from calibration sample %d", points[i]);
-			fflush(stdout);
+		//tobii_research_apply_calibration_data(native_data->eye_tracker, calibration_data);
 
+		//Writing data. for test
+
+		for(int i = 0; i < itemCount; i++)
+		{
+
+			item = native_data->calibration_result->calibration_points[i];
+			points[i] = item.calibration_samples->left_eye.position_on_display_area.x;
 			points[itemCount + i] = item.calibration_samples->left_eye.position_on_display_area.y;
 			points[2 * itemCount + i] = item.calibration_samples->right_eye.position_on_display_area.x;
 			points[3*itemCount+i] = item.calibration_samples->right_eye.position_on_display_area.y;
 
-        	//points[i] = item.leftMapPosition.x;
-        	//points[itemCount+i] = item.leftMapPosition.y;
-        	//points[2*itemCount+i] = item.rightMapPosition.x;
-        	//points[3*itemCount+i] = item.rightMapPosition.y;
-        }
-        env->ReleaseDoubleArrayElements(calibrationPoints, points, 0);
-		printf("returning calibration points");
-		fflush(stdout);
-        return calibrationPoints;
+			//points[i] = item.leftMapPosition.x;
+			//points[itemCount+i] = item.leftMapPosition.y;
+			//points[2*itemCount+i] = item.rightMapPosition.x;
+			//points[3*itemCount+i] = item.rightMapPosition.y;
+		}
+
+		env->ReleaseDoubleArrayElements(calibrationPoints, points, 0);
+		return calibrationPoints;
 	}
 	catch (const std::invalid_argument& e)
 	{
 		throwJException(env, "java/io/IOException", e.what());
 		return NULL;
-	} **/
-	return NULL;
+	} 
 }

@@ -181,7 +181,7 @@ public class TobiiTracker implements IEyeTracker {
                 e.printStackTrace();
             }
 
-            //tobii_tracker.calibrate();
+            tobii_tracker.calibrate();
 
             tobii_tracker.startTracking();
             tobii_tracker.displayCrosshair(true);
@@ -208,9 +208,9 @@ public class TobiiTracker implements IEyeTracker {
             tobii_tracker.close();
         } catch (EyeTrackerConnectException e) {
             System.out.println("Failed to connect to Tobii eyetracker.");
-        //} catch (CalibrationException e) {
-          //  tobii_tracker.close();
-            //System.out.println("Could not calibrate. Try again.");
+        } catch (CalibrationException e) {
+            tobii_tracker.close();
+            System.out.println("Could not calibrate. Try again.");
         } catch (IOException e) {
             tobii_tracker.close();
             System.out.println("IO failure occurred.");
