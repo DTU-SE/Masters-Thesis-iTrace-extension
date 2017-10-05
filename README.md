@@ -20,6 +20,7 @@ Goals to achieve in the project are:
   - connectTobiiTracker, finds the eyetracker and applies the license. License is currently hard coded.
   - StartTracking, subscribes to eyetracker and uses callback function and HandleGazeData to pass gazes to java application.
   - StopTracking unsubscribes from eyetracker and deletes the current eyetracking data.
+  
   CALIBRATION:
   - AddPoint, used to gather information about where someone is looking, compared to a specific point. Used whenever a focus point is recorded.
   - StartCalibration, puts the eyetracker in calibration mode.
