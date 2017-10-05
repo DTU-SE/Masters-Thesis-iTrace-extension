@@ -14,13 +14,21 @@ Goals to achieve in the project are:
 
 - Update the JNI to use the newest tobii SDK.
   - Added C support to SDK headers.
-  - MainLoop (legacy name) connects to the tracker and applies license.
+  
+  TRACKING:
+  - MainLoop (legacy name) starts the background thread and initialise the data used by the eytracker.
+  - connectTobiiTracker, finds the eyetracker and applies the license. License is currently hard coded.
   - StartTracking, subscribes to eyetracker and uses callback function and HandleGazeData to pass gazes to java application.
-  - StopTracking unsubscribes from eyetracker.
+  - StopTracking unsubscribes from eyetracker and deletes the current eyetracking data.
+  CALIBRATION:
+  - AddPoint, used to gather information about where someone is looking, compared to a specific point. Used whenever a focus point is recorded.
+  - StartCalibration, puts the eyetracker in calibration mode.
+  - StopCalibration, leaves calibration mode, and computes and applies the calibration to the eyetracker.
+  - GetCalibration, return the results of the calibration, used to show how accurate the calibration was.
+  
 - Add database support for iTrace
 
 - Visualise data gathered during an iTrace session.
-
 
 Potential further work if time allow it.
 - Examine possibilities for supporting writing in iTrace.
