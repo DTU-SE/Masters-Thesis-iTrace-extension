@@ -152,11 +152,13 @@ int apply_licenses_example(TobiiResearchEyeTracker* eyetracker, const char* lice
 	}
 	fclose(license_file);
 	printf("Applying license from %s.\n", license_file_path);
+	fflush(stdout);
 	TobiiResearchLicenseValidationResult validation_results;
 	TobiiResearchStatus retval = tobii_research_apply_licenses(eyetracker, (const void**)license_key_ring, &file_size, &validation_results, NUM_OF_LICENSES);
 	free(license_key_ring[0]);
 	if (retval == TOBII_RESEARCH_STATUS_OK && validation_results == TOBII_RESEARCH_LICENSE_VALIDATION_RESULT_OK) {
 		printf("Successfully applied license from list of keys.\n");
+		fflush(stdout);
 		return 1;
 	}
 	return 0;

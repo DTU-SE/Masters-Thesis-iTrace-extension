@@ -36,6 +36,7 @@ import edu.ysu.itrace.gaze.IStyledTextGazeResponse;
 import edu.ysu.itrace.preferences.PluginPreferences;
 import edu.ysu.itrace.solvers.ISolver;
 import edu.ysu.itrace.solvers.JSONGazeExportSolver;
+import edu.ysu.itrace.solvers.SQLGazeExportSolver;
 import edu.ysu.itrace.solvers.XMLGazeExportSolver;
 import edu.ysu.itrace.trackers.IEyeTracker;
 
@@ -58,8 +59,10 @@ public class ITrace extends AbstractUIPlugin implements EventHandler {
     private volatile boolean recording;
     private JSONGazeExportSolver jsonSolver;
     private XMLGazeExportSolver xmlSolver;
+    private SQLGazeExportSolver sqlSolver;
     private boolean jsonOutput = true;
     private boolean xmlOutput = true;
+    private boolean sqlOutput = true;
     
     private IActionBars actionBars;
     private IStatusLineManager statusLineManager;
@@ -90,8 +93,10 @@ public class ITrace extends AbstractUIPlugin implements EventHandler {
     	eventBroker.subscribe("iTrace/newgaze", this);
     	jsonSolver = new JSONGazeExportSolver();
     	xmlSolver = new XMLGazeExportSolver();
+    	sqlSolver = new SQLGazeExportSolver();
     	eventBroker.subscribe("iTrace/jsonOutput", jsonSolver);
     	eventBroker.subscribe("iTrace/xmlOutput", xmlSolver);
+    	eventBroker.subscribe("iTrace/sqlOutput", sqlSolver);
     }
 
     /*
@@ -169,6 +174,13 @@ public class ITrace extends AbstractUIPlugin implements EventHandler {
     	xmlSolver.displayExportFile();
     }
     
+    public void setSqlOutput(boolean value){
+      sqlOutput = value;
+    }
+    public void displaySqlExportFile(){
+      sqlSolver.displayExportFile();
+    }
+
     public boolean sessionInfoConfigured(){
     	return sessionInfo.isConfigured();
     }
@@ -230,7 +242,7 @@ public class ITrace extends AbstractUIPlugin implements EventHandler {
         
         xmlSolver.dispose();
         jsonSolver.dispose();
-        
+        sqlSolver.dispose();
         if (tracker != null) {
         } else {
             // If there is no tracker, tracking should not be occurring anyways.
@@ -264,6 +276,13 @@ public class ITrace extends AbstractUIPlugin implements EventHandler {
     				sessionInfo.getDevUsername());
     		jsonSolver.config(sessionInfo.getSessionID(),
     				sessionInfo.getDevUsername());
+    		//SQL has a special function, to let us include session information in the DB.
+    		sqlSolver.configSQL(sessionInfo.getSessionID(),
+    		    sessionInfo.getDevUsername(),
+    		    sessionInfo.getDevName(),
+    		    sessionInfo.getSessionDescrip(),
+    		    sessionInfo.getSessionPurpose());
+    		sqlSolver.setSessionInfo();
     	}
     }
     
@@ -401,6 +420,7 @@ public class ITrace extends AbstractUIPlugin implements EventHandler {
 		                 		registerTime = System.currentTimeMillis();
 		                 		if(xmlOutput) eventBroker.post("iTrace/xmlOutput", response);
 		                 		if(jsonOutput) eventBroker.post("iTrace/jsonOutput", response);
+		                 		if(sqlOutput) eventBroker.post("iTrace/sqlOutput", response);
 		                	 }
 		                     
 		                     if(response instanceof IStyledTextGazeResponse && response != null && showTokenHighlights){

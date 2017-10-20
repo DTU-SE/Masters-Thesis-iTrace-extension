@@ -309,6 +309,46 @@ public class ControlView extends ViewPart implements IPartListener2, EventHandle
             }
        });
        grayedControls.addIfAbsent(xmlSolverConfig);
+       
+       //SQL HERE
+       final Button sqlSolverEnabled =
+           new Button(solversComposite, SWT.CHECK);
+       sqlSolverEnabled.setText("SQL Export");
+       sqlSolverEnabled.setSelection(true);
+       sqlSolverEnabled.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (ITrace.getDefault().sessionInfoConfigured()) {
+                  if (sqlSolverEnabled.getSelection()) {
+                    ITrace.getDefault().setSqlOutput(true);
+                  } else {
+                    ITrace.getDefault().setSqlOutput(false);
+                  }
+                } else {
+                  ITrace.getDefault().setSqlOutput(false);
+                  sqlSolverEnabled.setSelection(false);
+                  displayError("You must configure your Sesssion "
+                      + "Info. first.");
+              }
+           }
+       });
+       grayedControls.addIfAbsent(sqlSolverEnabled);
+       
+       final Button sqlSolverConfig = new Button(solversComposite, SWT.PUSH);
+       sqlSolverConfig.setText("...");
+       sqlSolverConfig.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (ITrace.getDefault().sessionInfoConfigured()) {
+                  ITrace.getDefault().displaySqlExportFile();
+                } else {
+                  displayError("You must configure your Session Info. "
+                      + "first.");
+              }
+            }
+       });
+       grayedControls.addIfAbsent(sqlSolverConfig);
+
        //Solver Composite end. 
         
         //Configure Filters Here
