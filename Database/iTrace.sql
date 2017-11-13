@@ -16,8 +16,8 @@ CREATE TABLE gazes
 (
     gaze_id int AUTO_INCREMENT,
     gaze_session_id varchar(255),
-    name varchar(255),
-    type varchar(255),
+    gaze_name varchar(255),
+    gaze_type varchar(255),
     x int,
     y int,
     left_validation float,
@@ -44,8 +44,8 @@ CREATE TABLE gazes
 CREATE TABLE sces
 (
     sce_gaze_id int,
-    name varchar(255),
-    type varchar(255),
+    sce_name varchar(255),
+    sce_type varchar(255),
     how varchar(255),
     total_length int,
     start_line int,

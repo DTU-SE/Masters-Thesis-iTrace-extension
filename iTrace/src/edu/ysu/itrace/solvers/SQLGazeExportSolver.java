@@ -99,7 +99,7 @@ public class SQLGazeExportSolver implements IFileExportSolver, EventHandler {
             (int) (screenRect.height * response.getGaze().getY());
       
     Gaze gaze = response.getGaze();
-    String statementInsert = "INSERT INTO gazes (name, type, gaze_session_id, x, y,"
+    String statementInsert = "INSERT INTO gazes (gaze_name, gaze_type, gaze_session_id, x, y,"
         + "left_validation, right_validation, left_pupil_diameter,"
         + "right_pupil_diameter, timestamp, session_time, tracker_time,"
         + "system_time, nano_time";
@@ -163,7 +163,7 @@ public class SQLGazeExportSolver implements IFileExportSolver, EventHandler {
     for (SourceCodeEntity sce : styledResponse.getSCEs()) {
      
       String statementSCE = "INSERT INTO sces (sce_gaze_id, " 
-          + "name, type, how, total_length,"
+          + "sce_name, sce_type, how, total_length,"
           + "start_line, end_line, start_col, end_col, depth)" 
           + "VALUES ('" + sce_gaze_id + "','"
           + sce.getName() +"','"
