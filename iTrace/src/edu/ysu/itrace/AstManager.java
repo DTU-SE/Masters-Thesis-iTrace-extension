@@ -206,7 +206,7 @@ public class AstManager {
     /**
      * Reloads the AST from the current contents of the StyledText.
      */
-    public void reload() {
+    public void reload() {  
         //Reset source code entities list.
         sourceCodeEntities = new LinkedList<SourceCodeEntity>();
 
@@ -231,7 +231,7 @@ public class AstManager {
         ASTVisitor visitor = new ASTVisitor() {
        
         	public boolean visit(TypeDeclaration node) {
-                SourceCodeEntity sce = new SourceCodeEntity();
+        	   sce = new SourceCodeEntity();
                 sce.type = SCEType.TYPE;
                 sce.how = SCEHow.DECLARE;
                 ITypeBinding binding = node.resolveBinding();
