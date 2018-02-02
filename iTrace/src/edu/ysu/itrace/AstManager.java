@@ -231,7 +231,7 @@ public class AstManager {
         ASTVisitor visitor = new ASTVisitor() {
        
         	public boolean visit(TypeDeclaration node) {
-        	   sce = new SourceCodeEntity();
+        	      SourceCodeEntity sce = new SourceCodeEntity();
                 sce.type = SCEType.TYPE;
                 sce.how = SCEHow.DECLARE;
                 ITypeBinding binding = node.resolveBinding();
