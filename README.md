@@ -5,31 +5,12 @@ This is part of my master thesis at the Technical university of Denmark, in comp
 The iTrace application extension is cloned from https://github.com/SERESLab/iTrace-Archive/ .
 
 
-Project description is the following:
+# Project description:
 iTrace is an Eclipse plugin for linking eye tracking data to source code. The capabilities of iTrace are restricted to data collection, while visualization and analysis features are missing.
 Goal of this thesis is to extend the tool with an analysis and visualisation aspect allowing the user to achieve a comprehensive understanding of the coding process. 
 Possible application scenarios for the tool are software engineering experiments as well as teaching environments.  
 
-Goals to achieve in the project are:
+# Summary:
+The goal of the thesis is to create a tool for visualizing data gathered by the gaze to source code mapping Eclipse plugin, iTrace. The solution covers the steps necessary to analyze the data collected using iTrace. Starting with updating the iTrace interface connecting to the eye tracker to use the current state of the art Tobii eye tracker software development kit. Followed by extending the data storage of iTrace to support a database setup making several iTrace sessions readily available for the analysis tools. A python library, iTraceAnalyser is created to convert the iTrace gaze data into ﬁxations while retaining the source code information. Finally the thesis propose two visualization solutions. The ﬁrst being simple data visualizations using bar plots to quickly view data for single sessions. The second being a method of creating event logs making comparison of several sessions available through existing process mining tools
 
-- Update the JNI to use the newest tobii SDK.
-  - Added C support to SDK headers.
-  
-  TRACKING:
-  - MainLoop (legacy name) starts the background thread and initialise the data used by the eytracker.
-  - connectTobiiTracker, finds the eyetracker and applies the license. License is currently hard coded.
-  - StartTracking, subscribes to eyetracker and uses callback function and HandleGazeData to pass gazes to java application.
-  - StopTracking unsubscribes from eyetracker and deletes the current eyetracking data.
-  
-  CALIBRATION:
-  - AddPoint, used to gather information about where someone is looking, compared to a specific point. Used whenever a focus point is recorded.
-  - StartCalibration, puts the eyetracker in calibration mode.
-  - StopCalibration, leaves calibration mode, and computes and applies the calibration to the eyetracker.
-  - GetCalibration, return the results of the calibration, used to show how accurate the calibration was.
-  
-- Add database support for iTrace
-
-- Visualise data gathered during an iTrace session.
-
-Potential further work if time allow it.
-- Examine possibilities for supporting writing in iTrace.
+A short guide for setting up the system can be found in the thesis on PDF-page 89.
